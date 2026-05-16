@@ -4,6 +4,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# ఇక్కడ పర్మిషన్స్ యాడ్ చేశాం, దీనివల్ల బిల్డ్ ఫెయిల్ అవ్వదు
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -23,14 +27,6 @@ jobs:
         sudo apt-get install -y ccache git libffi-dev libssl-dev autoconf automake libtool pkg-config zlib1g-dev ioquake3-server libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav libgstreamer-plugins-base1.0-dev libasound2-dev libsqlite3-dev sqlite3 bzip2 libbz2-dev liblzma-dev org-mode-doc openjdk-17-jdk unzip zip
         sudo apt-get install -y python3-pip python3-setuptools python3-dev
         pip3 install --user --upgrade buildozer cython virtualenv kivy
-
-    - name: Initialize Buildozer
-      run: |
-        buildozer init
-        # Modify buildozer.spec to include correct requirements
-        sed -i 's/^requirements = .*/requirements = python3,kivy/' buildozer.spec
-        sed -i 's/^#android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
-        sed -i 's/^#orientation = r.*/orientation = portrait/' buildozer.spec
 
     - name: Build Android APK
       run: |
